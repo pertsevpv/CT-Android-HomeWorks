@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MyCalc</string>
+
+    <string name="text_copied_en">Result copied to the clipboard</string>
+    <string name="text_copied_ru">Результат скопирован в буфер обмена</string>
+
+    <string name="incorrect_input_en">Incorrect Input</string>
+    <string name="incorrect_input_ru">Неправильный ввод</string>
+
+</resources>
