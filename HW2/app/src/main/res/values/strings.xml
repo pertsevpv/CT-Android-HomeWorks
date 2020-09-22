@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="cur_temp">15°C</string>
+    <string name="cur_location">Saint-Petersburg, Russia</string>
+    <string name="cur_weather">Cloud</string>
+
+    <string name="press">Pressure</string>
+    <string name="wind_flow">Wind flow</string>
+    <string name="humidity">Humidity</string>
+
+    <string name="press_val">758mmHg</string>
+    <string name="wind_flow_val">4.0m/s</string>
+    <string name="humidity_val">66%</string>
+    
+    <string name="d1">Mon</string>
+    <string name="d2">Tue</string>
+    <string name="d3">Wed</string>
+    <string name="d4">Thu</string>
+    <string name="d5">Fri</string>
+
+    <string name="d1_val">17°C</string>
+    <string name="d2_val">15°C</string>
+    <string name="d3_val">14°C</string>
+    <string name="d4_val">10°C</string>
+    <string name="d5_val">12°C</string>
+
+    <string name="switch_theme">Switch Theme</string>
+</resources>

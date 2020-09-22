@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="White">#ffffff</color>
+    <color name="Black">#000000</color>
+
+    <color name="CobaltBlue">#1e213d</color>
+    <color name="Cyan">#00ffff</color>
+    <color name="AliceBlue">#f0f8ff</color>
+    <color name="GraniteGray">#2f353b</color>
+    <color name="Pumpkin">#ff7518</color>
+    <color name="Azure">#005aff</color>
+</resources>

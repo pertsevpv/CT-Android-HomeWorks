@@ -1,0 +1,36 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="LightTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/Pumpkin</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="ValTextColor">@color/GraniteGray</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="BackgroundColor">@color/AliceBlue</item>
+    </style>
+
+    <style name="DarkTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/Azure</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="ValTextColor">@color/Cyan</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="BackgroundColor">@color/CobaltBlue</item>
+    </style>
+
+    <style name="ValStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">?attr/ValTextColor</item>
+    </style>
+
+    <style name="ValNameStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">?attr/ValTextColor</item>
+    </style>
+
+    <style name="TempStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">?attr/ValTextColor</item>
+    </style>
+
+</resources>
