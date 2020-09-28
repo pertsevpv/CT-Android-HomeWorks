@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Contacts</string>
+    <string name="alert_text">This app needs some permissions</string>
+    <string name="snackbar_text">Permission is not obtained</string>
+    <string name="ok">OK</string>
+    <string name="sms_text">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa</string>
+</resources>
