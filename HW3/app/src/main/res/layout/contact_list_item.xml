@@ -15,6 +15,7 @@
         android:padding="8dp">
 
         <TextView
+            style="@style/ContactStyle"
             android:id="@+id/contact_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -28,6 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            style="@style/ContactStyle"
             android:id="@+id/contact_phone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

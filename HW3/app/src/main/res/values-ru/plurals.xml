@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <plurals name="contact_found" tools:ignore="MissingQuantity,UnusedQuantity">
+        <item quantity="zero">Контакты не найдены</item>
+        <item quantity="one">Найден %d контакт</item>
+        <item quantity="two">Найдено %d контакта</item>
+        <item quantity="other">Найдено %d контактов</item>
+    </plurals>
+</resources>

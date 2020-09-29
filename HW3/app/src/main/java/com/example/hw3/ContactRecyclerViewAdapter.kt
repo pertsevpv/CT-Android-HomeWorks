@@ -6,7 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.contact_list_item.view.*
 
-class ContactRecyclerViewAdapter(val contactList: List<Contact>, val onClickText: (Contact) -> Unit,val onClickImage: (Contact) -> Unit) :
+class ContactRecyclerViewAdapter(
+    val contactList: List<Contact>,
+    val onClickText: (Contact) -> Unit,
+    val onClickImage: (Contact) -> Unit
+) :
     RecyclerView.Adapter<ContactRecyclerViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
@@ -19,6 +23,9 @@ class ContactRecyclerViewAdapter(val contactList: List<Contact>, val onClickText
             )
         )
         holder.root.contact_name.setOnClickListener {
+            onClickText(contactList[holder.adapterPosition])
+        }
+        holder.root.contact_phone.setOnClickListener {
             onClickText(contactList[holder.adapterPosition])
         }
         holder.root.contact_send.setOnClickListener {

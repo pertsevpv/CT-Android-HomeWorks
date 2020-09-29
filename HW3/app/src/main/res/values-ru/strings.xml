@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Контакты</string>
+    <string name="alert_text">Этому приложению потребуются некоторые права</string>
+    <string name="snackbar_text">У вас прав нет</string>
+    <string name="ok">OK</string>
+    <string name="sms_text">Давно тебя не было в Уличных Гонках! Заходи!</string>
+</resources>

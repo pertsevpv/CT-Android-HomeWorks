@@ -3,5 +3,5 @@
     <string name="alert_text">This app needs some permissions</string>
     <string name="snackbar_text">Permission is not obtained</string>
     <string name="ok">OK</string>
-    <string name="sms_text">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa</string>
+    <string name="sms_text">It\'s been a long time since you\'ve been in the Street Race! Come in!</string>
 </resources>

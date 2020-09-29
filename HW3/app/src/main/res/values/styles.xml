@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ContactStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:color">#000000</item>
+
+    </style>
+
 </resources>
