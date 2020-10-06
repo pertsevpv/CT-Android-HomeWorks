@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Images</string>
+    <string name="next_page">more</string>
+    <string name="prev_page">prev</string>
+    <string name="description">Description</string>
+    <string name="no_description">No Description</string>
+</resources>
