@@ -17,21 +17,33 @@ class MainActivity : AppCompatActivity() {
         private var PAGE = 1
 
         val mainlist: ArrayList<ImageCard> = arrayListOf()
+
     }
 
     private var asyncTask: ImageLoader? = null
+    private lateinit var listAdapter: ImageCardRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        listAdapter = ImageCardRecyclerViewAdapter(mainlist) {
+            startActivity(Intent(this@MainActivity, HQImageActivity::class.java).apply {
+                putExtra(DESCRIPTION_KEY, it.description)
+                putExtra(FULLURL_KEY, it.fullURL)
+            })
+        }
+        image_recycler_view.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = listAdapter
+        }
+
         executeQuery()
         showList()
         more_button.setOnClickListener {
-
             PAGE++
             executeQuery()
             showList()
-
         }
     }
 
@@ -40,21 +52,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun executeQuery() {
         asyncTask = ImageLoader(this)
-        asyncTask?.apply {
-            execute(makeQueryUrl())
-        }
+        asyncTask?.execute(makeQueryUrl())
     }
 
     fun showList() {
-        image_recycler_view.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = ImageCardRecyclerViewAdapter(mainlist) {
-                startActivity(Intent(this@MainActivity, HQImageActivity::class.java).apply {
-                    putExtra(DESCRIPTION_KEY, it.description)
-                    putExtra(FULLURL_KEY, it.fullURL)
-                })
-            }
-        }
+        listAdapter.notifyDataSetChanged()
     }
 
     fun addToList(result: List<ImageCard>) {

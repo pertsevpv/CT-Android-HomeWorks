@@ -6,10 +6,12 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.media.Image
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.hq_image.*
 
@@ -18,7 +20,7 @@ const val DESCRIPTION_KEY = "DESCRIPTION_KEY"
 
 class HQImageActivity : AppCompatActivity() {
 
-    var broadcastReceiver: BroadcastReceiver? = null
+    private var broadcastReceiver: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,12 +34,15 @@ class HQImageActivity : AppCompatActivity() {
         hq_description.text = intent.getStringExtra(DESCRIPTION_KEY)
         hq_description.movementMethod = ScrollingMovementMethod()
 
+        hq_image.visibility = ImageView.INVISIBLE
+
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 val byteArray = intent?.getByteArrayExtra(BYTE_ARRAY_KEY)
                 if (byteArray != null) {
                     val byteImg = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
                     hq_image.setImageBitmap(byteImg)
+                    hq_image.visibility = ImageView.VISIBLE
                 }
             }
         }

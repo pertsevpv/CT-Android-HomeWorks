@@ -25,7 +25,6 @@ class ImageLoader(val activity: MainActivity) :
         if (!result.isNullOrEmpty()) {
             activity.addToList(result)
             activity.showList()
-            //activity.showList(result)
         }
     }
 
