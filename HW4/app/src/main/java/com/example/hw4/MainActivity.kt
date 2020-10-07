@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             adapter = listAdapter
         }
 
-        executeQuery()
+        if (mainlist.isNullOrEmpty()) executeQuery()
         showList()
         more_button.setOnClickListener {
             PAGE++
