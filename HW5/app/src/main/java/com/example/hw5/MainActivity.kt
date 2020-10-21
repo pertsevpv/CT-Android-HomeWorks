@@ -22,9 +22,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (savedInstanceState != null) {
+        if (savedInstanceState != null)
             onRestoreInstanceState(savedInstanceState)
-        }
 
         supportActionBar?.apply {
             setDisplayShowHomeEnabled(true)
@@ -34,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         if (curItemId == null)
             curItemId = R.id.navigation_home
 
+        addFragment(curItemId!!)
         setFragment(curItemId!!)
 
         Log.i("id1", R.id.navigation_home.toString())
