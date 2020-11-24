@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">HW8</string>
+    <string name="bad_connection">Bad Connection</string>
+    <string name="fail">Failed</string>
+    <string name="new_posts">New posts added</string>
+    <string name="api_posts">Posts downloaded</string>
+    <string name="bd_posts">Posts downloaded from BD</string>
+    <string name="bd_ins">Posts inserted in BD</string>
+    <string name="bd_del">Posts deleted from BD</string>
+    <string name="bd_clr">BD cleared</string>
+    <string name="bd_ref">BD refreshed</string>
+    <string name="del_posts">Post deleted</string>
+    <string name="ok">OK</string>
+    <string name="title">Title</string>
+    <string name="body">Body</string>
+    <string name="enter_title">Enter title</string>
+    <string name="enter_body">Enter body</string>
+    <string name="post">Post</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="action_refresh">Refresh from DB</string>
+    <string name="action_reload">Reload from API</string>
+</resources>
