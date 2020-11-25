@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
     private fun clearBD() {
         progressBar.visibility = ProgressBar.VISIBLE
         ThisApp.instance.postDB.getFakeDao().deleteAll()
-        showAlert(resources.getString(R.string.bd_clr))
+        progressBar.visibility = ProgressBar.INVISIBLE
     }
 
     private fun deletePostFromDB(post: Post) {
@@ -216,7 +216,7 @@ class MainActivity : AppCompatActivity() {
                 QueryTypes.POST -> {
                     result?.postId = postList.size * 10 + 1
                     postList.add(result!!)
-                    insertPostInDatabase(result,true)
+                    insertPostInDatabase(result, true)
                     showAlert("${resources.getString(R.string.new_posts)} \n${response.code()}")
                 }
                 QueryTypes.DELETE -> {

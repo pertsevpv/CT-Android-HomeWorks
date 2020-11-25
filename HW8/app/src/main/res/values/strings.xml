@@ -4,11 +4,11 @@
     <string name="fail">Failed</string>
     <string name="new_posts">New posts added</string>
     <string name="api_posts">Posts downloaded</string>
-    <string name="bd_posts">Posts downloaded from BD</string>
-    <string name="bd_ins">Posts inserted in BD</string>
-    <string name="bd_del">Posts deleted from BD</string>
-    <string name="bd_clr">BD cleared</string>
-    <string name="bd_ref">BD refreshed</string>
+    <string name="bd_posts">Posts downloaded from DB</string>
+    <string name="bd_ins">Posts inserted in DB</string>
+    <string name="bd_del">Posts deleted from DB</string>
+    <string name="bd_clr">DB cleared</string>
+    <string name="bd_ref">DB refreshed</string>
     <string name="del_posts">Post deleted</string>
     <string name="ok">OK</string>
     <string name="title">Title</string>
