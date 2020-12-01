@@ -26,7 +26,7 @@ class ThisApp : Application() {
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
         fakeAPIService = mRetrofit.create()
-        postDB = Room.databaseBuilder(applicationContext, FakeDatabase::class.java, DATABASE_NAME).allowMainThreadQueries().addMigrations()
+        postDB = Room.databaseBuilder(applicationContext, FakeDatabase::class.java, DATABASE_NAME)
             .build()
     }
 

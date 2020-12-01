@@ -12,6 +12,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,9 +37,14 @@ enum class QueryTypes {
 
 class MainActivity : AppCompatActivity() {
 
-    private var postList: ArrayList<Post> = arrayListOf()
+    var postList: ArrayList<Post> = arrayListOf()
 
     private lateinit var listAdapter: PostRecyclerViewAdapter
+
+    private var getAllTask: DBGetAllTask? = null
+    private var insertTask: DBInsertTask? = null
+    private var deleteAllTask: DBClearTask? = null
+    private var deleteTask: DBDeleteTask? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,16 +56,8 @@ class MainActivity : AppCompatActivity() {
                 savedInstanceState.getParcelableArrayList<Post>(POST_LIST_KEY) as ArrayList<Post>
         }
 
-        if (postList.isNullOrEmpty()) {
-            postList = getAllPostsFromBD() as ArrayList<Post>
-            if (!postList.isNullOrEmpty())
-                showAlert(resources.getString(R.string.bd_posts))
-        }
         if (postList.isNullOrEmpty())
-            getPostsByUserId(MY_USER_ID)
-        else {
-            progressBar.visibility = ProgressBar.INVISIBLE
-        }
+            getAllPostsFromBD()
 
         listAdapter = PostRecyclerViewAdapter(postList) {
             deletePost(it)
@@ -70,8 +68,6 @@ class MainActivity : AppCompatActivity() {
         }
         update()
         add_button.setOnClickListener {
-            for (post in postList) {
-            }
             startActivityForResult(
                 Intent(this@MainActivity, AddActivity::class.java),
                 NEW_POST_REQUEST_CODE
@@ -79,11 +75,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getAllPosts() {
+    fun getAllPosts() {
+        progressBar.visibility = ProgressBar.VISIBLE
         ThisApp.instance.fakeAPIService.getAllPosts().enqueue(PostListCallback())
     }
 
-    private fun getPostsByUserId(id: Int) {
+    fun getPostsByUserId(id: Int) {
         progressBar.visibility = ProgressBar.VISIBLE
         ThisApp.instance.fakeAPIService.getPostByUserId(id).enqueue(PostListCallback())
     }
@@ -98,40 +95,42 @@ class MainActivity : AppCompatActivity() {
             .enqueue(PostCallback(QueryTypes.DELETE, post))
     }
 
-    private fun getAllPostsFromBD(): List<Post> {
-        progressBar.visibility = ProgressBar.VISIBLE
-        return ThisApp.instance.postDB.getFakeDao().getAll()
+    private fun getAllPostsFromBD() {
+        getAllTask?.cancel(true)
+        getAllTask = DBGetAllTask(this)
+        getAllTask?.execute()
     }
 
-    private fun insertPostInDatabase(post: Post, showMsg: Boolean = false) {
+    private fun insertPostInDatabase(vararg post: Post) {
         progressBar.visibility = ProgressBar.VISIBLE
-        ThisApp.instance.postDB.getFakeDao().insertPost(post)
-        if (showMsg) showAlert(resources.getString(R.string.bd_ins))
+        insertTask?.cancel(true)
+        insertTask = DBInsertTask(this)
+        insertTask?.execute(*post)
     }
 
     private fun clearBD() {
         progressBar.visibility = ProgressBar.VISIBLE
-        ThisApp.instance.postDB.getFakeDao().deleteAll()
-        progressBar.visibility = ProgressBar.INVISIBLE
+        deleteAllTask?.cancel(true)
+        deleteAllTask = DBClearTask(this)
+        deleteAllTask?.execute()
     }
 
     private fun deletePostFromDB(post: Post) {
         progressBar.visibility = ProgressBar.VISIBLE
-        ThisApp.instance.postDB.getFakeDao().deletePost(post)
-        showAlert(resources.getString(R.string.bd_del))
+        deleteTask?.cancel(true)
+        deleteTask = DBDeleteTask(this)
+        deleteTask?.execute(post)
     }
 
 
-    private fun update() {
+    fun update() {
+        main_recycler.recycledViewPool.clear()
         listAdapter.notifyDataSetChanged()
     }
 
-    private fun showAlert(msg: String) {
+    fun showAlert(msg: String) {
         progressBar.visibility = ProgressBar.INVISIBLE
-        AlertDialog.Builder(this).apply {
-            setMessage(msg)
-            setPositiveButton(resources.getString(R.string.ok)) { dialog: DialogInterface, _: Int -> dialog.cancel() }
-        }.show()
+        Snackbar.make(main_layout, msg, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -142,6 +141,7 @@ class MainActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         postList = savedInstanceState.getParcelableArrayList<Post>(POST_LIST_KEY) as ArrayList<Post>
+        progressBar.visibility = ProgressBar.INVISIBLE
         update()
     }
 
@@ -165,14 +165,13 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_refresh -> {
-                postList.clear()
-                postList.addAll(getAllPostsFromBD())
+                getAllPostsFromBD()
                 showAlert(resources.getString(R.string.bd_ref))
                 update()
                 return true
             }
             R.id.action_reload -> {
-                getPostsByUserId(MY_USER_ID)
+                getAllPosts()
                 return true
             }
             else -> false
@@ -189,7 +188,7 @@ class MainActivity : AppCompatActivity() {
             postList.clear()
             postList.addAll(result as ArrayList)
             clearBD()
-            for (post in postList) insertPostInDatabase(post)
+            /*for (post in postList)*/ insertPostInDatabase(*postList.toTypedArray())
             update()
             showAlert("${resources.getString(R.string.api_posts)} \n${response.code()}")
         }
@@ -214,9 +213,9 @@ class MainActivity : AppCompatActivity() {
             val result = response.body()
             when (type) {
                 QueryTypes.POST -> {
-                    result?.postId = postList.size * 10 + 1
+                    result?.postId = postList.size * 2 + 1
                     postList.add(result!!)
-                    insertPostInDatabase(result, true)
+                    insertPostInDatabase(result)
                     showAlert("${resources.getString(R.string.new_posts)} \n${response.code()}")
                 }
                 QueryTypes.DELETE -> {
