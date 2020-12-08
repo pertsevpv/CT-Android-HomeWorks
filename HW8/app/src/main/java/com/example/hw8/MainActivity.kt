@@ -1,5 +1,6 @@
 package com.example.hw8
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.DialogInterface.OnClickListener
 import android.content.Intent
@@ -30,6 +31,8 @@ const val NEW_POST_REQUEST_CODE = 1
 const val NEW_POST_RESULT_CODE = 2
 const val DATABASE_NAME = "post_database"
 const val TABLE_NAME = "fake_posts"
+const val FIRST_LAUNCH_KEY = "FIRST_LAUNCH_KEY"
+const val MAIN_PREFS_NAME = "MAIN_PREFS_NAME"
 
 enum class QueryTypes {
     POST, DELETE
@@ -86,7 +89,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun postNewPost(data: Post) {
-        ThisApp.instance.fakeAPIService.loadNewPost(data).enqueue(PostCallback(QueryTypes.POST))
+        ThisApp.instance.fakeAPIService.loadNewPost(data)
+            .enqueue(PostCallback(QueryTypes.POST, data))
     }
 
     private fun deletePost(post: Post) {
@@ -108,7 +112,7 @@ class MainActivity : AppCompatActivity() {
         insertTask?.execute(*post)
     }
 
-    private fun clearBD() {
+    private fun reloadAPI() {
         progressBar.visibility = ProgressBar.VISIBLE
         deleteAllTask?.cancel(true)
         deleteAllTask = DBClearTask(this)
@@ -166,12 +170,10 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_refresh -> {
                 getAllPostsFromBD()
-                showAlert(resources.getString(R.string.bd_ref))
-                update()
                 return true
             }
             R.id.action_reload -> {
-                getAllPosts()
+                reloadAPI()
                 return true
             }
             else -> false
@@ -187,7 +189,6 @@ class MainActivity : AppCompatActivity() {
             val result = response.body()
             postList.clear()
             postList.addAll(result as ArrayList)
-            clearBD()
             /*for (post in postList)*/ insertPostInDatabase(*postList.toTypedArray())
             update()
             showAlert("${resources.getString(R.string.api_posts)} \n${response.code()}")
@@ -235,7 +236,20 @@ class MainActivity : AppCompatActivity() {
                     R.string.bad_connection
                 )}"
             )
+            when (type) {
+                QueryTypes.POST -> {
+                    post.postId = postList.size * 2 + 1
+                    postList.add(post)
+                    insertPostInDatabase(post)
+                }
+                QueryTypes.DELETE -> {
+                    if (postList.contains(post)) {
+                        postList.remove(post)
+                        deletePostFromDB(post)
+                    }
+                }
+            }
+            update()
         }
-
     }
 }
