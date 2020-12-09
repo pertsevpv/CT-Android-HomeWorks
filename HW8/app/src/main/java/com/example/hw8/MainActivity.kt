@@ -173,7 +173,7 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_reload -> {
-                reloadAPI()
+                getAllPosts()
                 return true
             }
             else -> false
@@ -186,6 +186,7 @@ class MainActivity : AppCompatActivity() {
                 showAlert("${resources.getString(R.string.bad_connection)} \n${response.code()}")
                 return
             }
+            reloadAPI()
             val result = response.body()
             postList.clear()
             postList.addAll(result as ArrayList)
@@ -200,6 +201,7 @@ class MainActivity : AppCompatActivity() {
                     R.string.bad_connection
                 )}"
             )
+            update()
         }
     }
 

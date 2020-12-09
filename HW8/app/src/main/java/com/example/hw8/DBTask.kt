@@ -47,9 +47,7 @@ class DBClearTask(private val activity: MainActivity) : AsyncTask<Unit, Unit, Un
     override fun onPostExecute(result: Unit?) {
         super.onPostExecute(result)
         activity.apply {
-            postList.clear()
             progressBar.visibility = ProgressBar.INVISIBLE
-            getAllPosts()
         }
     }
 
